@@ -1,18 +1,16 @@
 //import libraries to create components
-import React from "react";
-import { Text, StyleSheet, View} from "react-native";
+import React from 'react';
+import { Text, StyleSheet, View } from 'react-native';
 
-const Button = () 
-{
-    return(
-        <TouchableOpacity>
-            <Text>Buttons</Text>
-            </TouchableOpacity>
-    );
+const Button = () => {
+  return (
+    <TouchableOpacity>
+      <Text>Buttons</Text>
+    </TouchableOpacity>
+  );
 };
 
-const styles= StyleSheet.create({
-    textStyle: {},
+const styles = StyleSheet.create({
+  textStyle: {},
 });
 export default Button;
-

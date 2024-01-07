@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "97728179748",
-    "project_id": "todo-app-acde6",
-    "storage_bucket": "todo-app-acde6.appspot.com"
+    "project_number": "746779052907",
+    "project_id": "redlink-c6270",
+    "storage_bucket": "redlink-c6270.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:97728179748:android:0aef6850a30795709e32b1",
+        "mobilesdk_app_id": "1:746779052907:android:8bd9c969e8a46fd08b5a2e",
         "android_client_info": {
-          "package_name": "com.todoapp"
+          "package_name": "com.niniroula.redlink"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBWnY9a1lZ8ZFqlJi6Xstv0SqiFJWR0eAo"
+          "current_key": "AIzaSyBpHbbfTCOp8IP5VEdAl2rpfFPay_vZB8A"
         }
       ],
       "services": {

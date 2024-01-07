@@ -74,9 +74,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.todoapp"
+    namespace "com.niniroula.redlink"
     defaultConfig {
-        applicationId "com.todoapp"
+        applicationId "com.niniroula.redlink"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,5 +1,4 @@
-package com.todoapp;
-
+package com.niniroula.redlink;
 import android.app.Application;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
