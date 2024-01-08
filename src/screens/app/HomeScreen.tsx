@@ -1,19 +1,10 @@
 // React Native Bottom Navigation
 // https://aboutreact.com/react-native-bottom-navigation/
 import * as React from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  TextInput,
-  Button,
-} from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
+import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import { Colors } from '../../utils/colors';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View
@@ -36,18 +27,6 @@ const HomeScreen = ({ navigation }) => {
           >
             No recent activities!
           </Text>
-          {/* <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate("ProfileStack", { screen: "Profile" })}
-                    >
-                        <Text>Go to Profile Tab</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate("Details")}
-                    >
-                        <Text>Open Details Screen</Text>
-                    </TouchableOpacity> */}
         </View>
       </View>
     </SafeAreaView>

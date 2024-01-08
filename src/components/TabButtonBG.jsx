@@ -1,6 +1,6 @@
-const { Svg, Path } = require("react-native-svg");
+const { Svg, Path } = require('react-native-svg');
 
-const TabButtonBG = ({ color = "#FFFFFF", ...props }) => {
+const TabButtonBG = ({ color = '#FFFFFF', ...props }) => {
   return (
     <Svg width={75} height={64} viewBox="0 0 75 64" {...props}>
       <Path

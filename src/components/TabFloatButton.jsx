@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import TabButtonBG from "./TabButtonBG";
+import React from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import TabButtonBG from './TabButtonBG';
 
 export const TabFloatButton = ({ bgColor, ...props }) => (
   <View style={styles.container} pointerEvents="box-none">
@@ -14,26 +14,26 @@ export const TabFloatButton = ({ bgColor, ...props }) => (
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
+    position: 'relative',
     width: 75,
-    alignItems: "center",
+    alignItems: 'center',
   },
   background: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
   },
   button: {
     top: -22.5,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 50,
     height: 50,
     borderRadius: 27,
-    backgroundColor: "#E94F37",
+    backgroundColor: '#E94F37',
     elevation: 1,
   },
   buttonIcon: {
     fontSize: 16,
-    color: "#F6F7EB",
+    color: '#F6F7EB',
   },
 });
