@@ -1,17 +1,13 @@
 // React Native Bottom Navigation
 // https://aboutreact.com/react-native-bottom-navigation/
-import { Button } from '@rneui/base';
 import * as React from 'react';
-import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { Text, Button, Avatar } from 'react-native-paper';
+import { UserContext } from '../../context/UserContext';
 
-const ProfileScreen = ({ route, navigation }) => {
-  const signOut = () => {
-    auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
-  };
-
+const ProfileScreen = ({ navigation }) => {
+  const { state } = React.useContext<any>(UserContext);
+  const { user } = state;
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 16 }}>
@@ -19,10 +15,29 @@ const ProfileScreen = ({ route, navigation }) => {
           style={{
             flex: 1,
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
           }}
         >
-          <Button onPress={signOut}>Log out</Button>
+          <Avatar.Icon size={72} icon="account" />
+
+          {user.name ? <Text> Niraj Niroula</Text> : null}
+          <Text style={{ marginVertical: 8 }}> {user.phoneNumber}</Text>
+          <Button
+            mode="outlined"
+            onPress={() => navigation.navigate('EditProfile')}
+          >
+            Edit profile
+          </Button>
+          <View
+            style={{
+              width: '100%',
+              height: 1,
+              backgroundColor: 'lightgrey',
+              marginVertical: 16,
+            }}
+          />
+
+          <Text> Activities</Text>
         </View>
       </View>
     </SafeAreaView>

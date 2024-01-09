@@ -1,7 +1,7 @@
 // React Native Bottom Navigation
 // https://aboutreact.com/react-native-bottom-navigation/
 import * as React from 'react';
-import { ThemeProvider } from '@rneui/themed';
+import { PaperProvider } from 'react-native-paper';
 import { theme } from './src/config/theme';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { UserProvider } from './src/context/UserContext';
@@ -13,9 +13,9 @@ function App() {
   return (
     <UserProvider>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
+        <PaperProvider theme={theme}>
           <MainScreen />
-        </ThemeProvider>
+        </PaperProvider>
       </QueryClientProvider>
     </UserProvider>
   );

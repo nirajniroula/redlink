@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, Button } from 'react-native';
+import { View, SafeAreaView, StatusBar } from 'react-native';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { TextInput } from 'react-native';
-import { Input, Text } from '@rneui/themed';
-
+import { TextInput, Button } from 'react-native-paper';
 type ScreenType = { navigation: any; route: any };
 
 const EnterPhoneScreen = ({ navigation }: ScreenType) => {
@@ -27,7 +25,6 @@ const EnterPhoneScreen = ({ navigation }: ScreenType) => {
     try {
       setLoading(true);
       await confirm?.confirm(code);
-      setLoading(false);
     } catch (error) {
       setLoading(false);
       console.log('Invalid code.');
@@ -46,34 +43,38 @@ const EnterPhoneScreen = ({ navigation }: ScreenType) => {
         >
           {!confirm ? (
             <>
-              <Input
-                placeholder="Phone Number"
+              <TextInput
                 value="+977 1212121212" //Test firebase phone number
                 disabled
-                label="Enter your phone number to continue"
+                label="Phone number"
+                style={{ width: '100%', marginBottom: 16 }}
               />
               <Button
-                title="Continue"
                 onPress={() => signInWithPhoneNumber('+977 1212121212')}
                 disabled={loading}
-              />
+                mode="outlined"
+              >
+                Continue
+              </Button>
             </>
           ) : (
             <>
-              <Input
-                placeholder="Enter Code"
+              <TextInput
+                label="OTP code"
                 value={code}
                 disabled
                 onChangeText={(text) => setCode(text)}
                 keyboardType="number-pad"
-                label="Enter the OTP code (hint: 222222)"
+                style={{ width: '100%', marginBottom: 16 }}
               />
 
               <Button
-                title="Confirm"
                 onPress={() => confirmCode()}
                 disabled={loading}
-              />
+                mode="outlined"
+              >
+                Confirm
+              </Button>
             </>
           )}
         </View>

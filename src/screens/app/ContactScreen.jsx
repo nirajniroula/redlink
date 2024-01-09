@@ -8,7 +8,7 @@ import {
   PermissionsAndroid,
   FlatList,
 } from 'react-native';
-import { Text } from '@rneui/themed';
+import { Text } from 'react-native-paper';
 import Contacts from 'react-native-contacts';
 const ContactsScreen = () => {
   const [contacts, setContacts] = useState();

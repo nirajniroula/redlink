@@ -1,26 +1,56 @@
 import * as React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+  NativeStackNavigationOptions,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors } from '../utils/colors';
 import {
   ContactScreen,
+  EditProfileScreen,
   HomeScreen,
   ProfileScreen,
   SettingsScreen,
 } from './app';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { IconButton } from 'react-native-paper';
+import auth from '@react-native-firebase/auth';
 
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
+  const signOut = () => {
+    auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+  };
+
+  const commonScreenOptions = {
+    headerShown: true,
+    headerStyle: { backgroundColor: 'tomato' },
+    headerTintColor: '#fff',
+    headerTitleStyle: { fontWeight: 'bold' },
+  } as NativeStackNavigationOptions;
+
   function HomeStack() {
     return (
       <Stack.Navigator
         initialRouteName="Home"
-        screenOptions={{ headerShown: false }}
+        screenOptions={commonScreenOptions}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    );
+  }
+
+  function ContactStack() {
+    return (
+      <Stack.Navigator
+        initialRouteName="Contact"
+        screenOptions={commonScreenOptions}
+      >
+        <Stack.Screen name="Contacts" component={ContactScreen} />
       </Stack.Navigator>
     );
   }
@@ -29,9 +59,22 @@ const AppStack = () => {
     return (
       <Stack.Navigator
         initialRouteName="Profile"
-        screenOptions={{ headerShown: false }}
+        screenOptions={commonScreenOptions}
       >
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            headerRight: () => (
+              <IconButton icon="logout" iconColor={'white'} onPress={signOut} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfileScreen}
+          options={{ title: 'Edit profile' }}
+        />
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     );
@@ -42,14 +85,13 @@ const AppStack = () => {
       <Tab.Navigator
         initialRouteName="Feed"
         screenOptions={({ route }) => ({
-          headerStyle: { backgroundColor: 'tomato' },
+          headerShown: false,
           tabBarStyle: {
             backgroundColor: Colors.PAGE_WHITE,
             borderTopWidth: 0,
             elevation: 0,
           },
-          headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' },
+
           tabBarActiveBackgroundColor: Colors.BOTTOM_TAB_BAR_BG,
           tabBarInactiveBackgroundColor: Colors.BOTTOM_TAB_BAR_BG,
           tabBarActiveTintColor: 'tomato',
@@ -85,7 +127,7 @@ const AppStack = () => {
 
         <Tab.Screen
           name="AddNew"
-          component={ContactScreen}
+          component={ContactStack}
           options={{
             tabBarLabel: 'Contacts',
             title: 'Contacts',
