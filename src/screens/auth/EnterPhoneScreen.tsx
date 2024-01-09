@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, SafeAreaView, Button } from 'react-native';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { TextInput } from 'react-native';
+import { Input, Text } from '@rneui/themed';
 
 type ScreenType = { navigation: any; route: any };
 
@@ -10,8 +11,8 @@ const EnterPhoneScreen = ({ navigation }: ScreenType) => {
   const [confirm, setConfirm] =
     useState<FirebaseAuthTypes.ConfirmationResult>();
 
-  // verification code (OTP - One-Time-Passcode)
-  const [code, setCode] = useState('');
+  // verification code (Test OTP - One-Time-Passcode)
+  const [code, setCode] = useState('222222');
   const [loading, setLoading] = useState(false);
 
   // Handle the button press
@@ -44,25 +45,32 @@ const EnterPhoneScreen = ({ navigation }: ScreenType) => {
           }}
         >
           {!confirm ? (
-            <Button
-              title="Phone Number Sign In"
-              onPress={() => signInWithPhoneNumber('+977 1212121212')}
-              disabled={loading}
-            />
-          ) : (
             <>
-              <TextInput
-                style={{
-                  backgroundColor: 'lightgray',
-                  width: '100%',
-                  marginBottom: 8,
-                }}
-                value={code}
-                onChangeText={(text) => setCode(text)}
-                keyboardType="number-pad"
+              <Input
+                placeholder="Phone Number"
+                value="+977 1212121212" //Test firebase phone number
+                disabled
+                label="Enter your phone number to continue"
               />
               <Button
-                title="Confirm Code"
+                title="Continue"
+                onPress={() => signInWithPhoneNumber('+977 1212121212')}
+                disabled={loading}
+              />
+            </>
+          ) : (
+            <>
+              <Input
+                placeholder="Enter Code"
+                value={code}
+                disabled
+                onChangeText={(text) => setCode(text)}
+                keyboardType="number-pad"
+                label="Enter the OTP code (hint: 222222)"
+              />
+
+              <Button
+                title="Confirm"
                 onPress={() => confirmCode()}
                 disabled={loading}
               />

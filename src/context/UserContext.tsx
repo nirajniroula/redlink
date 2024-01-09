@@ -2,17 +2,17 @@
 
 import React, { createContext, useReducer, useEffect, ReactNode } from 'react';
 import { appStorage } from '../utils/storage';
-import { User } from './types';
+import { FirebaseAuthUser } from './types';
 
 // Define the state type
 export interface UserState {
-  user: User | null;
+  user: FirebaseAuthUser | null;
   loading: boolean;
 }
 
 // Define action types
 export type UserAction =
-  | { type: 'SET_USER'; payload: User }
+  | { type: 'SET_USER'; payload: FirebaseAuthUser }
   | { type: 'CLEAR_USER' };
 
 // Define the initial state
@@ -46,7 +46,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   useEffect(() => {
     const loadUser = () => {
       try {
-        let userObject = {} as User;
+        let userObject = {} as FirebaseAuthUser;
         const jsonUser = appStorage.getString('user');
         if (jsonUser) {
           userObject = JSON.parse(jsonUser);
