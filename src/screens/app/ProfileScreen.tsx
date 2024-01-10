@@ -20,7 +20,15 @@ const ProfileScreen = ({ navigation }) => {
         >
           <Avatar.Icon size={72} icon="account" />
 
-          {user.name ? <Text> Niraj Niroula</Text> : null}
+          {user.firstName ? (
+            <Text
+              style={{
+                marginTop: 16,
+              }}
+            >
+              {user.firstName} {user.lastName}
+            </Text>
+          ) : null}
           <Text style={{ marginVertical: 8 }}> {user.phoneNumber}</Text>
           <Button
             mode="outlined"

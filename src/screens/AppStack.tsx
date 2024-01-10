@@ -66,7 +66,7 @@ const AppStack = () => {
           component={ProfileScreen}
           options={{
             headerRight: () => (
-              <IconButton icon="logout" iconColor={'white'} onPress={signOut} />
+              <IconButton icon="cog" iconColor={'white'} onPress={signOut} />
             ),
           }}
         />
