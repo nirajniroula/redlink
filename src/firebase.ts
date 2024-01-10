@@ -22,12 +22,10 @@ const addUser = async (user: { phoneNumber: string }) => {
 
       const userDocRef = await usersRef.add(userToAdd);
       const generatedUserId = userDocRef.id;
-      console.log('User added successfully.');
-      return generatedUserId;
+      return { ...userToAdd, userId: generatedUserId };
     } else {
-      const userId = querySnapshot.docs[0].id;
-      console.log('User already exists.');
-      return userId;
+      const userSnapshot = querySnapshot.docs[0].data();
+      return { ...userSnapshot };
     }
   } catch (error) {
     console.log('Firestore error:', error);
@@ -37,7 +35,6 @@ const addUser = async (user: { phoneNumber: string }) => {
 
 export const updateUser = async (userId: string, user: Partial<AppUser>) => {
   try {
-    delete user.userId;
     const userToUpdate: Record<string, any> = {};
     Object.entries(user).forEach(([key, value]) => {
       if (value !== undefined) {

@@ -20,9 +20,9 @@ function MainScreen() {
   async function onAuthStateChanged(user: any) {
     if (user) {
       const appUser = { phoneNumber: user.phoneNumber as string };
-      const res = await addUser(appUser);
-      if (res) {
-        dispatch({ type: 'SET_USER', payload: { ...appUser, userId: res } });
+      const currentUser = await addUser(appUser);
+      if (currentUser) {
+        dispatch({ type: 'SET_USER', payload: currentUser });
       }
     } else {
       dispatch({ type: 'CLEAR_USER' });
