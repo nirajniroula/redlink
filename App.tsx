@@ -6,9 +6,12 @@ import { theme } from './src/config/theme';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { UserProvider } from './src/context/UserContext';
 import MainScreen from './src/screens/MainScreen';
+import Geolocation from '@react-native-community/geolocation';
 
 const queryClient = new QueryClient();
-
+Geolocation.setRNConfiguration({
+  skipPermissionRequests: false,
+});
 function App() {
   return (
     <UserProvider>

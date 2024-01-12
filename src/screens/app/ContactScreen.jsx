@@ -38,7 +38,7 @@ const ContactsScreen = () => {
         // work with contacts
         const sortedContacts = getSortedConatcts(contacts);
         setContacts(sortedContacts);
-        console.log(sortedContacts.length);
+        console.log(sortedContacts[56]);
       })
       .catch((e) => {
         console.log(e);
@@ -62,7 +62,7 @@ const ContactsScreen = () => {
     return sortedContacts;
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item, index }) => (
     <View
       style={{
         padding: 16,
@@ -71,6 +71,7 @@ const ContactsScreen = () => {
       }}
     >
       <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+        {index}
         {item.displayName}
       </Text>
 

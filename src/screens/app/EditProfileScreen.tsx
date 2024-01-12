@@ -3,56 +3,13 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import { Colors } from '../../utils/colors';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, Icon, TextInput } from 'react-native-paper';
 import { UserContext } from '../../context/UserContext';
 import { updateUser } from '../../firebase';
 import { AppUser } from '../../context/types';
 import DropDownPicker from 'react-native-dropdown-picker';
-
-const iso3166 = require('iso-3166-1-alpha-2');
-const countryEmoji = require('country-emoji');
-
-const allCountries = iso3166.getCodes().map((code: string) => {
-  const countryName = iso3166.getCountry(code);
-  const flag = countryEmoji.flag(code);
-  return { label: `${flag} ${countryName}`, value: code };
-});
-
-const bloodGroupsList = [
-  {
-    label: 'A+',
-    value: 'A+',
-  },
-  {
-    label: 'A-',
-    value: 'A-',
-  },
-  {
-    label: 'B+',
-    value: 'B+',
-  },
-  {
-    label: 'B-',
-    value: 'B-',
-  },
-  {
-    label: 'AB+',
-    value: 'AB+',
-  },
-  {
-    label: 'AB-',
-    value: 'AB-',
-  },
-  {
-    label: 'O+',
-    value: 'O+',
-  },
-  {
-    label: 'O-',
-    value: 'O-',
-  },
-];
-
+import { allCountries, bloodGroupsList } from '../../utils/constants';
+import { getLocation } from '../../utils/locations';
 const EditProfileScreen = () => {
   const { state, dispatch } = React.useContext<any>(UserContext);
   const { user } = state;
@@ -61,6 +18,8 @@ const EditProfileScreen = () => {
   const [loading, setLoading] = React.useState(false);
   const [showBloodDropDown, setShowBloodDropDown] = React.useState(false);
   const [showCountryDropDown, setShowCountryDropDown] = React.useState(false);
+  const [address, setAddress] = React.useState<string>();
+  const [loadingAddress, setLoadingAddress] = React.useState<boolean>(false);
 
   const areUsersDifferent = (obj1: AppUser, obj2: AppUser): boolean => {
     const keys1 = Object.keys(obj1) as (keyof AppUser)[];
@@ -71,8 +30,23 @@ const EditProfileScreen = () => {
     return Array.from(allKeys).some((key) => obj1[key] !== obj2[key]);
   };
 
+  const onLocationPress = async () => {
+    setLoadingAddress(true);
+    const geoLoc = await getLocation();
+    const displayAddress = `${geoLoc?.address?.city_district}, ${geoLoc?.address?.county}`;
+    setAddress(displayAddress);
+    const loc = {
+      lat: geoLoc?.lat,
+      lon: geoLoc?.lan,
+      address: geoLoc?.address,
+      displayAddress: address,
+    };
+
+    setEditUser({ ...editUser, location: loc });
+    setLoadingAddress(false);
+  };
+
   const onSubmitPress = async () => {
-    console.log('...', user, editUser);
     if (editUser.userId && areUsersDifferent(user, editUser)) {
       setLoading(true);
 
@@ -131,13 +105,16 @@ const EditProfileScreen = () => {
           />
 
           <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              display: 'flex',
-              flexDirection: 'row',
-              width: '100%',
-            }}
+            style={[
+              styles.textInput,
+              {
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+              },
+            ]}
           >
             <DropDownPicker
               open={showBloodDropDown}
@@ -167,6 +144,21 @@ const EditProfileScreen = () => {
               containerStyle={{ width: '60%' }}
             />
           </View>
+
+          <TextInput
+            label="Location"
+            style={styles.textInput}
+            value={address}
+            left={<TextInput.Icon icon="map-marker" size={20} />}
+            disabled={loadingAddress}
+            right={
+              loadingAddress ? (
+                <TextInput.Icon icon="loading" size={20} />
+              ) : null
+            }
+            onPressIn={onLocationPress}
+            onChangeText={(text) => setAddress(text)}
+          />
         </View>
         <Button
           mode="contained"

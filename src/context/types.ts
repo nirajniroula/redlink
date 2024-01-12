@@ -45,3 +45,10 @@ export interface ProviderDaum {
   displayName: string;
   uid: string;
 }
+
+export type LocationType = {
+  lat: number;
+  long: number;
+  city: string;
+  province: string;
+};
