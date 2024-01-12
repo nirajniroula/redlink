@@ -34,12 +34,12 @@ const EditProfileScreen = () => {
     setLoadingAddress(true);
     const geoLoc = await getLocation();
     const displayAddress = `${geoLoc?.address?.city_district}, ${geoLoc?.address?.county}`;
-    setAddress(displayAddress);
+    // setAddress(displayAddress);
     const loc = {
       lat: geoLoc?.lat,
-      lon: geoLoc?.lan,
+      lon: geoLoc?.lon,
       address: geoLoc?.address,
-      displayAddress: address,
+      displayAddress: displayAddress,
     };
 
     setEditUser({ ...editUser, location: loc });
@@ -49,6 +49,7 @@ const EditProfileScreen = () => {
   const onSubmitPress = async () => {
     if (editUser.userId && areUsersDifferent(user, editUser)) {
       setLoading(true);
+      console.log('user', editUser);
 
       const res = await updateUser(editUser.userId, editUser).finally(() => {
         setLoading(false);
@@ -148,7 +149,7 @@ const EditProfileScreen = () => {
           <TextInput
             label="Location"
             style={styles.textInput}
-            value={address}
+            value={editUser?.location?.displayAddress}
             left={<TextInput.Icon icon="map-marker" size={20} />}
             disabled={loadingAddress}
             right={
@@ -157,7 +158,12 @@ const EditProfileScreen = () => {
               ) : null
             }
             onPressIn={onLocationPress}
-            onChangeText={(text) => setAddress(text)}
+            onChangeText={(text) => {
+              setEditUser({
+                ...editUser,
+                location: { ...editUser?.location, displayAddress: text },
+              });
+            }}
           />
         </View>
         <Button
