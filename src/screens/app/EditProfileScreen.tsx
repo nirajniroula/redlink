@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import { Colors } from '../../utils/colors';
-import { Button, Icon, TextInput } from 'react-native-paper';
+import { ActivityIndicator, Button, Icon, TextInput } from 'react-native-paper';
 import { UserContext } from '../../context/UserContext';
 import { updateUser } from '../../firebase';
 import { AppUser } from '../../context/types';
@@ -32,17 +32,22 @@ const EditProfileScreen = () => {
 
   const onLocationPress = async () => {
     setLoadingAddress(true);
-    const geoLoc = await getLocation();
-    const displayAddress = `${geoLoc?.address?.city_district}, ${geoLoc?.address?.county}`;
-    // setAddress(displayAddress);
-    const loc = {
-      lat: geoLoc?.lat,
-      lon: geoLoc?.lon,
-      address: geoLoc?.address,
-      displayAddress: displayAddress,
-    };
+    try {
+      const geoLoc = await getLocation();
+      const displayAddress = `${geoLoc?.address?.city_district}, ${geoLoc?.address?.county}`;
+      const loc = {
+        lat: geoLoc?.lat,
+        lon: geoLoc?.lon,
+        address: geoLoc?.address,
+        displayAddress: displayAddress,
+      };
 
-    setEditUser({ ...editUser, location: loc });
+      setEditUser({ ...editUser, location: loc });
+    } catch (err) {
+      console.log('Location error:', err);
+      setLoadingAddress(false);
+    }
+
     setLoadingAddress(false);
   };
 
@@ -105,6 +110,26 @@ const EditProfileScreen = () => {
             }
           />
 
+          <TextInput
+            label="Location"
+            style={styles.textInput}
+            value={editUser?.location?.displayAddress}
+            left={<TextInput.Icon icon="map-marker" size={20} />}
+            disabled={loadingAddress}
+            right={
+              loadingAddress ? (
+                <ActivityIndicator animating={true} color={'tomato'} />
+              ) : null
+            }
+            onPressIn={onLocationPress}
+            onChangeText={(text) => {
+              setEditUser({
+                ...editUser,
+                location: { ...editUser?.location, displayAddress: text },
+              });
+            }}
+          />
+
           <View
             style={[
               styles.textInput,
@@ -125,7 +150,6 @@ const EditProfileScreen = () => {
               setValue={() => {}}
               onSelectItem={(item) => {
                 setEditUser({ ...editUser, bloodGroup: item.value });
-                console.log('...', item.value);
               }}
               placeholder={'Blood Group'}
               containerStyle={{ width: '36%' }}
@@ -145,26 +169,6 @@ const EditProfileScreen = () => {
               containerStyle={{ width: '60%' }}
             />
           </View>
-
-          <TextInput
-            label="Location"
-            style={styles.textInput}
-            value={editUser?.location?.displayAddress}
-            left={<TextInput.Icon icon="map-marker" size={20} />}
-            disabled={loadingAddress}
-            right={
-              loadingAddress ? (
-                <TextInput.Icon icon="loading" size={20} />
-              ) : null
-            }
-            onPressIn={onLocationPress}
-            onChangeText={(text) => {
-              setEditUser({
-                ...editUser,
-                location: { ...editUser?.location, displayAddress: text },
-              });
-            }}
-          />
         </View>
         <Button
           mode="contained"

@@ -18,8 +18,14 @@ const ProfileScreen = ({ navigation }) => {
             justifyContent: 'flex-start',
           }}
         >
-          <Avatar.Icon size={72} icon="account" />
-
+          <Avatar.Text
+            size={72}
+            label={user.bloodGroup || '?'}
+            color="white"
+            style={{ backgroundColor: 'tomato' }}
+            labelStyle={{fontSize: 24}}
+            
+          />
           {user.firstName ? (
             <Text
               style={{

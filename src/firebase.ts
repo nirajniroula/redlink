@@ -54,4 +54,40 @@ export const updateUser = async (userId: string, user: Partial<AppUser>) => {
   }
 };
 
+export const getMultipleContactsByNumber = async (
+  phoneNumbers: (string | undefined)[],
+) => {
+  if (!phoneNumbers) {
+    return [];
+  }
+  const allUsers = [];
+
+  while (phoneNumbers.length > 0) {
+    try {
+      const batchNumbers = phoneNumbers.splice(0, 10); // Create a copy of the batch
+
+      const querySnapshot = await firestore()
+        .collection('users')
+        .where('phoneNumber', 'in', batchNumbers)
+        .get();
+
+      allUsers.push(...querySnapshot.docs);
+    } catch (error) {
+      console.error('Firestore query error:', error);
+    }
+
+    // If more numbers to process, handle pagination:
+    if (phoneNumbers.length > 0) {
+      // Optionally add a delay or rate limiting here for large datasets
+      console.log('Processing next batch...', phoneNumbers.length);
+    }
+  }
+  const userMap = new Map();
+  allUsers.forEach((doc) => {
+    userMap.set(doc.data().phoneNumber, doc.data().bloodGroup);
+  });
+
+  return userMap;
+};
+
 export { addUser };

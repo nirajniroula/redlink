@@ -10,15 +10,25 @@ const EnterPhoneScreen = ({ navigation }: ScreenType) => {
     useState<FirebaseAuthTypes.ConfirmationResult>();
 
   // verification code (Test OTP - One-Time-Passcode)
-  const [code, setCode] = useState('222222');
+  const [code, setCode] = useState('');
+  const [phone, setPhone] = useState('');
+
   const [loading, setLoading] = useState(false);
 
   // Handle the button press
-  async function signInWithPhoneNumber(phoneNumber: string) {
-    setLoading(true);
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    setConfirm(confirmation);
-    setLoading(false);
+  async function signInWithPhoneNumber() {
+    if (phone) {
+      console.log('phone', phone);
+      try {
+        setLoading(true);
+        const confirmation = await auth().signInWithPhoneNumber(`+977${phone}`);
+        setConfirm(confirmation);
+        setLoading(false);
+      } catch (err) {
+        console.log('Auth error:', err);
+        setLoading(false);
+      }
+    }
   }
 
   async function confirmCode() {
@@ -44,15 +54,17 @@ const EnterPhoneScreen = ({ navigation }: ScreenType) => {
           {!confirm ? (
             <>
               <TextInput
-                value="+977 1212121212" //Test firebase phone number
-                disabled
+                left={<TextInput.Affix text="+977 " />}
+                value={phone} //Test firebase phone number
                 label="Phone number"
                 style={{ width: '100%', marginBottom: 16 }}
+                onChangeText={(text) => setPhone(text)}
               />
               <Button
-                onPress={() => signInWithPhoneNumber('+977 1212121212')}
+                onPress={signInWithPhoneNumber}
                 disabled={loading}
                 mode="outlined"
+                loading={loading}
               >
                 Continue
               </Button>
@@ -62,7 +74,6 @@ const EnterPhoneScreen = ({ navigation }: ScreenType) => {
               <TextInput
                 label="OTP code"
                 value={code}
-                disabled
                 onChangeText={(text) => setCode(text)}
                 keyboardType="number-pad"
                 style={{ width: '100%', marginBottom: 16 }}
@@ -72,6 +83,7 @@ const EnterPhoneScreen = ({ navigation }: ScreenType) => {
                 onPress={() => confirmCode()}
                 disabled={loading}
                 mode="outlined"
+                loading={loading}
               >
                 Confirm
               </Button>

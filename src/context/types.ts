@@ -1,3 +1,5 @@
+import { Contact, PhoneNumber } from 'react-native-contacts';
+
 export interface AppUser {
   userId?: string;
   phoneNumber: string;
@@ -52,3 +54,11 @@ export type LocationType = {
   city: string;
   province: string;
 };
+
+export interface RLPhoneNumbersType extends PhoneNumber {
+  normalizedNumber?: string;
+}
+export interface RLContactType extends Contact {
+  phoneNumbers: RLPhoneNumbersType[];
+  bloodGroup?: string;
+}
