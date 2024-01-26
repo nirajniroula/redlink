@@ -11,6 +11,7 @@ import {
   HomeScreen,
   ProfileScreen,
   SettingsScreen,
+  AddRequest
 } from './app';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { IconButton } from 'react-native-paper';
@@ -40,6 +41,8 @@ const AppStack = () => {
         screenOptions={commonScreenOptions}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="AddRequest" component={AddRequest} />
+
       </Stack.Navigator>
     );
   }
@@ -97,6 +100,7 @@ const AppStack = () => {
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
           tabBarShowLabel: false,
+          tabBarHideOnKeyboard: true,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName = '';
             if (route.name === 'HomeStack') {

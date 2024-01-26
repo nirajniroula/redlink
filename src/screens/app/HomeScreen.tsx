@@ -3,8 +3,9 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import { Colors } from '../../utils/colors';
+import { FAB } from 'react-native-paper';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View
@@ -28,6 +29,11 @@ const HomeScreen = () => {
             No recent activities!
           </Text>
         </View>
+        <FAB
+          icon="plus"
+          style={styles.fab}
+          onPress={() => navigation.navigate('AddRequest')}
+        />
       </View>
     </SafeAreaView>
   );
@@ -40,6 +46,12 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 300,
     marginTop: 16,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 24,
+    right: 0,
+    bottom: 0,
   },
 });
 export default HomeScreen;

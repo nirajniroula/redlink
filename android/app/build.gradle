@@ -74,6 +74,7 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+
     namespace "com.niniroula.redlink"
     defaultConfig {
         applicationId "com.niniroula.redlink"

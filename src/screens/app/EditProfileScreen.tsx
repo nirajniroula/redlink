@@ -10,6 +10,7 @@ import { AppUser } from '../../context/types';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { allCountries, bloodGroupsList } from '../../utils/constants';
 import { getLocation } from '../../utils/locations';
+
 const EditProfileScreen = () => {
   const { state, dispatch } = React.useContext<any>(UserContext);
   const { user } = state;
@@ -101,6 +102,7 @@ const EditProfileScreen = () => {
             value={defaultEditUser.phoneNumber}
             disabled
           />
+          
           <TextInput
             label="Email"
             style={styles.textInput}
